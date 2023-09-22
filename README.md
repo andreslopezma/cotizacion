@@ -7,60 +7,36 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About Project
+Antes de inicar el proyecto es importante tener instalado XAMPP dentro de la maquina y inicar el xampp normal
+Una vez que se inice le XAMPP crear la base de datos llamada "tienda"
+Luego ejecutar el comando php artisan migrate para crear las tablas
+despues entrar a la base de datos y ejecutar el siguiente comando para crear productos de prueba
+    insert into products(product_code,product_name,product_price,product_image,active,created_at) 
+    values ('BRAV-001','Balon de Futbol',29.30,'',1,1);
+    insert into products(product_code,product_name,product_price,product_image,active,created_at) 
+    values ('BRAV-002','Balon de Basket',22.00,'https://wilsonstore.com.co/wp-content/uploads/2023/02/WTB9300XB07-1_0000_WTB9300XB_0_7_NBA_DRV_BSKT_OR.png.cq5dam.web_.1200.1200.jpg',1,1);
+    insert into products(product_code,product_name,product_price,product_image,active,created_at) 
+    values ('BRAV-003','Pelota de tenis',8.99,'https://assets.stickpng.com/images/580b585b2edbce24c47b2b90.png',1,1);
+    insert into products(product_code,product_name,product_price,product_image,active,created_at) 
+    values ('BRAV-004','Raqueta',49.50,'https://larrytennis.com/cdn/shop/products/WR074011U_9_900x.jpg',1,1);
+    insert into products(product_code,product_name,product_price,product_image,active,created_at) 
+    values ('BRAV-005','Palo de Golf',85.99,'https://i.ebayimg.com/thumbs/images/g/TEsAAOSwIK5fsjRp/s-l225.jpg',1,1);
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+IMPORTANTE: al momento de usar el endpoint que termina "/quotation" que se usa para crear las cotizaciones, la estrucutra de datos que resive es la siguiente 
+{
+    "name": "Andres Lopez",
+    "lastname": "Lopez Manrique",
+    "address": "Carrera 10",
+    "date_quotation": "2023/09/22",
+    "products": [
+        {
+            "product_id": 1,
+            "quantity": 12
+        },
+        {
+            "product_id": 2,
+            "quantity": 3
+        }
+    ]
+}
