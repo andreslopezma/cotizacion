@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->float('value_unit');
             $table->float('value_total');
+            $table->integer('quantity');
             $table->timestamp('date_quotation');
             $table->timestamps();
 
