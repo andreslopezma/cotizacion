@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->float('value_unit');
-            $table->float('value_total');
-            $table->integer('quantity');
             $table->timestamp('date_quotation');
             $table->timestamps();
 
