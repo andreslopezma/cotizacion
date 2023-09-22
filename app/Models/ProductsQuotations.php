@@ -12,5 +12,5 @@ class ProductsQuotations extends Model
     /**
      * @var array
      */
-    protected $fillable = ['product_id', 'quotation_id'];
+    protected $fillable = ['product_id', 'quotation_id', 'value_total', 'value_unit', 'quantity'];
 }
