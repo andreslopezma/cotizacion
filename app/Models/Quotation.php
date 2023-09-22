@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Quotation extends Model
 {
@@ -15,7 +14,7 @@ class Quotation extends Model
     /**
      * @var array
      */
-    protected $fillable = ['date_quotation', 'user_id', 'value_total', 'value_unit', 'quantity'];
+    protected $fillable = ['date_quotation', 'user_id'];
 
     /**
      * Get the user for the quotation
@@ -23,5 +22,13 @@ class Quotation extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the Products
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'products_quotations')->withPivot('value_total');
     }
 }
