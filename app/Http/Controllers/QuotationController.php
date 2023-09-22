@@ -10,9 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
-use function PHPSTORM_META\map;
-use function PHPUnit\Framework\throwException;
-
 class QuotationController extends Controller
 {
     /**
@@ -25,10 +22,11 @@ class QuotationController extends Controller
             return [
                 'data' => $quotations->map(function ($quotation) {
                     return [
+                        'id' => $quotation->id,
                         'date_quotation' => $quotation->date_quotation,
-                        'quantity' => $quotation->quantity,
-                        'value_total' => $quotation->value_total,
-                        'value_unit' => $quotation->value_unit,
+                        'value_total' => array_sum($quotation->products->map(function ($product) {
+                            return $product->pivot->value_total;
+                        })->toArray()),
                         'client' => $quotation->user->name
                     ];
                 }),
@@ -57,8 +55,7 @@ class QuotationController extends Controller
                     'lastname' => 'required|nullable',
                     'address' => 'required|nullable',
                     'date_quotation' => 'required|nullable|date',
-                    'product_id' => 'required|nullable|numeric',
-                    'quantity' => 'required|nullable|numeric'
+                    'products' => 'required|nullable'
                 ]
             );
 
@@ -73,27 +70,31 @@ class QuotationController extends Controller
                 'address' => $request->address
             ]);
 
-            // get the product
-            $product = Product::find($request->product_id);
-            if (!$product) {
-                throw new \Exception('El producto no existe');
+
+            $quotation = Quotation::create([
+                'date_quotation' => $request->date_quotation,
+                'user_id' => $user->id
+            ]);
+
+            foreach ($request->products as $product) {
+                // get the product
+                $objProduct = Product::find($product['product_id']);
+                if (!$objProduct) {
+                    throw new \Exception('El producto no existe');
+                }
+
+                // save the table pivot between Quotation and Product
+                ProductsQuotations::create([
+                    'product_id' => $objProduct->id,
+                    'quotation_id' => $quotation->id,
+                    'quantity' => $product['quantity'],
+                    'value_total' => $objProduct->product_price * $product['quantity'],
+                    'value_unit' => $objProduct->product_price
+                ]);
             }
 
             // save the quotation
-            $quotation = Quotation::create([
-                'date_quotation' => $request->date_quotation,
-                'quantity' => $request->quantity,
-                'user_id' => $user->id,
-                'value_total' => $product->product_price * $request->quantity,
-                'value_unit' => $product->product_price
-            ]);
-
-
-            // save the table pivot between Quotation and Product
-            ProductsQuotations::create([
-                'product_id' => $product->id,
-                'quotation_id' => $quotation->id
-            ]);
+            $quotation->save();
 
             DB::commit();
             return response()->json([
