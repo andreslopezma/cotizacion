@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +19,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::controller(ProductsController::class)->group(function () {
+    Route::get('/products', 'index');
+});
+
+
+Route::controller(QuotationController::class)->group(function () {
+    Route::get('/quotations', 'index');
+    Route::post('/quotation', 'store');
 });
